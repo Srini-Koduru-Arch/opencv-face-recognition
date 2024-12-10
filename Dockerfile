@@ -1,10 +1,14 @@
 FROM python:3.10
 
-EXPOSE 8080
-WORKDIR /opencv-face-recognition
+# Set the working directory in the container
 
-COPY . ./
+WORKDIR /opencv-fd
 
-RUN pip install -r requirements.txt
+COPY . /opencv-fd
 
-ENTRYPOINT ["streamlit", "run", "opencv_fd_app.py", "--server.port=8080", "--server.address=0.0.0.0"]
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Expose the port Streamlit will run on
+EXPOSE 8501
+
+ENTRYPOINT ["streamlit", "run", "opencv_fd_app.py", "--server.port=8051", "--server.headless", "true"]
